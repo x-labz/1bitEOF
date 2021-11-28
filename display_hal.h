@@ -12,5 +12,5 @@ public:
     DisplayHal();
     void clearDisplay(void);
     void display(void);
-    void drawPixel(int16_t x, int16_t y, uint16_t color);
+    void drawPixel(int16_t x, int16_t y, uint16_t color, bool fullScr);
 };

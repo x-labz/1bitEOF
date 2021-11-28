@@ -197,7 +197,7 @@ void restartGame(state_t *state, uint8_t evt)
     }
 }
 
-void renderSprite(int16_t x_pos, int16_t y_pos, const tImage *image, uint8_t w, uint8_t h, uint8_t offset, DisplayHal *display)
+void renderSprite(int16_t x_pos, int16_t y_pos, const tImage *image, uint8_t w, uint8_t h, uint8_t offset, DisplayHal *display, bool fullScr)
 {
     uint16_t o = offset * w * h;
     for (uint8_t y = 0; y != h; y++)
@@ -206,7 +206,7 @@ void renderSprite(int16_t x_pos, int16_t y_pos, const tImage *image, uint8_t w, 
         {
             if (image->data[x + y * w + o])
             {
-                display->drawPixel(x_pos + x, y_pos + y, SSD1306_WHITE);
+                display->drawPixel(x_pos + x, y_pos + y, SSD1306_WHITE, fullScr);
             }
         }
     }
@@ -220,19 +220,19 @@ void renderNum(uint8_t value, uint8_t x, uint8_t y, DisplayHal *display)
     {
         uint8_t character = buffer[i];
         const tImage *img_p = Font_5x8.chars[character - 0x20].image;
-        renderSprite(x + img_p->w * i, y, img_p, img_p->w, img_p->h, 0, display);
+        renderSprite(x + img_p->w * i, y, img_p, img_p->w, img_p->h, 0, display, false);
     }
 }
 
 void renderGame(state_t *state, DisplayHal *display)
 {
-    renderSprite(0, 0, &chamSprite, 32, 32, state->cham.frame, display);
-    renderSprite(state->fly.x, state->fly.y, &flySprite, 6, 6, state->fly.frame, display);
+    renderSprite(0, 0, &chamSprite, 32, 32, state->cham.frame, display, false);
+    renderSprite(state->fly.x, state->fly.y, &flySprite, 6, 6, state->fly.frame, display, false);
     if (state->cham.tongue_x > 0)
     {
         for (uint8_t i = 0; i != state->cham.tongue_x; i++)
         {
-            display->drawPixel(state->cham.offset_x + i, state->cham.offset_y, SSD1306_WHITE);
+            display->drawPixel(state->cham.offset_x + i, state->cham.offset_y, SSD1306_WHITE,false);
         }
     }
 
@@ -242,18 +242,18 @@ void renderGame(state_t *state, DisplayHal *display)
     {
         for (uint8_t i = 0; i < cham_p->dying_state; i += 2)
         {
-            display->drawPixel(cham_p->offset_x + tounge_anim[i], cham_p->offset_y + tounge_anim[i + 1], SSD1306_WHITE);
+            display->drawPixel(cham_p->offset_x + tounge_anim[i], cham_p->offset_y + tounge_anim[i + 1], SSD1306_WHITE,false);
         }
     }
     // draw health meter
     const tImage *img_p = Font_5x8.chars[0x1b].image;
-    renderSprite(70, 0, img_p, img_p->w, img_p->h, 0, display);
+    renderSprite(70, 0, img_p, img_p->w, img_p->h, 0, display, false);
     if (cham_p->health > 0)
     {
         for (uint8_t i = 0; i != cham_p->health / 5; i++)
         {
-            display->drawPixel(77 + i, 3, SSD1306_WHITE);
-            display->drawPixel(77 + i, 4, SSD1306_WHITE);
+            display->drawPixel(77 + i, 3, SSD1306_WHITE,false);
+            display->drawPixel(77 + i, 4, SSD1306_WHITE,false);
         }
     }
 

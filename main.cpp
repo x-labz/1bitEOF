@@ -3,15 +3,20 @@
 #include "display_hal.h"
 #include "button.h"
 #include "./game/game.h"
+#include "./assets/eof.h"
+#include "font/Font.h"
+#include "Synth.h"
 
 using PC = Pokitto::Core;
 using PD = Pokitto::Display;
 using PB = Pokitto::Buttons;
-// using PS = Pokitto::Sound ;
+using PS = Pokitto::Sound ;
 
 int main()
 {
-    // PS::ampEnable(1);
+    PS::ampEnable(1);
+
+    bool startup = true;
 
     PD::persistence = false;
     PD::invisiblecolor = 0;
@@ -29,9 +34,19 @@ int main()
         if (!PC::update())
             continue;
 
-        uint8_t evt = PC::buttons.aBtn() ? CLK : NONE;
-
-        gameTick(&display, evt);
+        if (startup)
+        {
+            renderSprite(0, 0, &eofSprite, 220, 176, 0, &display, true);
+            if (PC::buttons.bBtn()) startup = false ;
+            setOSC(&osc1,1,3,0,0,1,46,127,160,39,1,59,0,0,13,1,0) ;
+        }
+        else
+        {
+            uint8_t evt = PC::buttons.aBtn() ? CLK : NONE;
+            PD::color = 1;
+            PD::drawRect((220 - 128) / 2 - 1, (176 - 32) / 2 - 1, 128 + 1, 32 + 1);
+            gameTick(&display, evt);
+        }
     }
 
     return 0;

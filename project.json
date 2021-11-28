@@ -582,6 +582,24 @@
 		},
 		"\\assets\\chameleon2.h": {
 			"sdcard": false
+		},
+		"\\assets\\sprite_eof2.png": {
+			"sdcard": false
+		},
+		"\\assets\\sprite_eof2.h": {
+			"sdcard": false
+		},
+		"\\assets\\eof.c": {
+			"sdcard": false
+		},
+		"\\assets\\fly copy.h": {
+			"sdcard": false
+		},
+		"\\assets\\eof.h": {
+			"sdcard": false
+		},
+		"\\1 bit - EOF.eeprom": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,

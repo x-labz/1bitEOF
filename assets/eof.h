@@ -2,4 +2,4 @@
 
 #include "../font/Font.h"
 
-extern const tImage flySprite ;
+extern const tImage eofSprite ;
