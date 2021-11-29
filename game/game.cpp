@@ -4,7 +4,7 @@
 #include "./assets/fly.h"
 #include "game-types.h"
 #include "button.h"
-
+#include "Synth.h"
 
 state_t state;
 
@@ -99,6 +99,7 @@ void systemChamAction(state_t *state, uint8_t evt)
     {
         cham->state = OPENING;
         cham->health -= 10;
+        setOSC(&osc1,1,3,0,0,1,46,127,160,39,1,59,0,0,13,1,0) ;
         return;
     }
     if (cham->state == OPENING)

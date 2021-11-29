@@ -46,8 +46,8 @@
 //   HIGH_RAM_ON    - Simply enable the RAM hardware
 //   HIGH_RAM_MUSIC - Enable and move the sound buffers to high RAM
 // Default is HIGH_RAM_OFF.
-// #define PROJ_HIGH_RAM HIGH_RAM_OFF
-#define PROJ_HIGH_RAM HIGH_RAM_MUSIC
+#define PROJ_HIGH_RAM HIGH_RAM_OFF
+// #define PROJ_HIGH_RAM HIGH_RAM_MUSIC
 
 // Disabling persistence will clear the framebuffer
 // automatically when it is sent to the LCD.
@@ -66,7 +66,7 @@
 
 // Enable Pokitto::Sound::playSFX
 // Optional. Comment to disable.
-#define PROJ_ENABLE_SFX
+// #define PROJ_ENABLE_SFX
 
 
 // Enable streaming music from SD
@@ -96,7 +96,8 @@
 
 // Enable Synth
 // Optional. Can be 0 or 1. Default is 0.
-#define PROJ_ENABLE_SYNTH 0
+#define PROJ_ENABLE_SYNTH 1
+#define PROJ_STREAM_TO_DAC 0
 
 
 // ---- SECTION: TASMODE ----

@@ -600,6 +600,15 @@
 		},
 		"\\1 bit - EOF.eeprom": {
 			"sdcard": false
+		},
+		"\\eof.elf": {
+			"sdcard": false
+		},
+		"\\eof.bin": {
+			"sdcard": false
+		},
+		"\\eof.eeprom": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,
