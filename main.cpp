@@ -38,7 +38,6 @@ int main()
         {
             renderSprite(0, 0, &eofSprite, 220, 176, 0, &display, true);
             if (PC::buttons.bBtn()) startup = false ;
-            setOSC(&osc1,1,3,0,0,1,46,127,160,39,1,59,0,0,13,1,0) ;
         }
         else
         {

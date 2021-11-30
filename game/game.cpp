@@ -99,7 +99,10 @@ void systemChamAction(state_t *state, uint8_t evt)
     {
         cham->state = OPENING;
         cham->health -= 10;
-        setOSC(&osc1,1,3,0,0,1,46,127,160,39,1,59,0,0,13,1,0) ;
+        if (cham->health > 0)
+        {
+            setOSC(&osc1, 1, 5,0,0,1,67,216,254,106,178,181,0,0,9,1,0);
+        }
         return;
     }
     if (cham->state == OPENING)
@@ -157,11 +160,13 @@ void systemDetectCatch(state_t *state)
 
     if (cham_p->state == OPEN && fly_p->state == FLY && (fly_p->y <= cham_p->offset_y) && (fly_p->y >= cham_p->offset_y - 3) && (cham_p->tongue_x + cham_p->offset_x) >= (fly_p->x - 1))
     {
-        cham_p->tongue_x = fly_p->x - cham_p->offset_x  ;
+        cham_p->tongue_x = fly_p->x - cham_p->offset_x;
         fly_p->state = CATCHED;
         cham_p->tounge_dir = -1;
         cham_p->fly_catched++;
         cham_p->health += 20;
+
+        setOSC(&osc1,1,3,0,0,1,56,240,248,250,2,29,0,0,0,1,0);
     }
 }
 
@@ -177,6 +182,8 @@ void systemCheckHealth(state_t *state)
         cham_p->health = 0;
         cham_p->state = DYING;
         cham_p->frame = 4;
+
+        setOSC(&osc1,1,3,0,0,1,28,240,232,50,57,243,1,0,0,1,0) ; 
     }
 
     if (cham_p->state == DYING)
@@ -233,7 +240,7 @@ void renderGame(state_t *state, DisplayHal *display)
     {
         for (uint8_t i = 0; i != state->cham.tongue_x; i++)
         {
-            display->drawPixel(state->cham.offset_x + i, state->cham.offset_y, SSD1306_WHITE,false);
+            display->drawPixel(state->cham.offset_x + i, state->cham.offset_y, SSD1306_WHITE, false);
         }
     }
 
@@ -243,7 +250,7 @@ void renderGame(state_t *state, DisplayHal *display)
     {
         for (uint8_t i = 0; i < cham_p->dying_state; i += 2)
         {
-            display->drawPixel(cham_p->offset_x + tounge_anim[i], cham_p->offset_y + tounge_anim[i + 1], SSD1306_WHITE,false);
+            display->drawPixel(cham_p->offset_x + tounge_anim[i], cham_p->offset_y + tounge_anim[i + 1], SSD1306_WHITE, false);
         }
     }
     // draw health meter
@@ -253,8 +260,8 @@ void renderGame(state_t *state, DisplayHal *display)
     {
         for (uint8_t i = 0; i != cham_p->health / 5; i++)
         {
-            display->drawPixel(77 + i, 3, SSD1306_WHITE,false);
-            display->drawPixel(77 + i, 4, SSD1306_WHITE,false);
+            display->drawPixel(77 + i, 3, SSD1306_WHITE, false);
+            display->drawPixel(77 + i, 4, SSD1306_WHITE, false);
         }
     }
 
@@ -271,7 +278,7 @@ void gameTick(DisplayHal *display, uint8_t event)
     systemChamAction(&state, event);
     systemDetectCatch(&state);
     systemCheckHealth(&state);
-    restartGame(&state, event) ;
+    restartGame(&state, event);
     renderGame(&state, display);
 
     display->display();
