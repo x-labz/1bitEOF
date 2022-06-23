@@ -1,2 +1,2 @@
-# traffic
-traffic game for pokitto
+# end of flight
+end of flight game for pokitto
